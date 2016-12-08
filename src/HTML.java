@@ -16,7 +16,11 @@ import java.nio.file.Paths;
  * @author Quang
  */
 public class HTML {
-
+    /**
+     * Thêm phần địa chỉ, phần này cũng có chức năng quay lại thư mục cha
+     * @param path Địa chỉ thư mục
+     * @return Mã HTML cần thêm
+     */
     private static String breadcrumbs(String path) {
         path += "/";
         String tmp = "<div class=\"breadcrumbs\">";
@@ -35,7 +39,11 @@ public class HTML {
         tmp += "</div>";
         return tmp;
     }
-
+    /**
+     * Lấy thông tin về số tệp con của folder hoặc dung lượng file
+     * @param fileEntry
+     * @return 
+     */
     private static String getDetails(File fileEntry) {
         try {
             if (fileEntry.isDirectory()) {
@@ -59,7 +67,11 @@ public class HTML {
             return "N/A";
         }
     }
-
+    /**
+     * 
+     * @param folder File đầu vào
+     * @return Mã HTML trình diễn danh sách file và folder
+     */
     private static String folderToHTML(final File folder) {
         String returnHTML = "";
         for (final File fileEntry : folder.listFiles()) {
@@ -78,10 +90,11 @@ public class HTML {
         return returnHTML;
     }
 
-    private static String fileToHTML(final File folder) {
-        return "<p>abcd</p>";//TODO
-    }
-
+    /**
+     * Lấy phần mở rộng của file
+     * @param file
+     * @return 
+     */
     private static String getExtensionOfFile(File file) {
         String fileExtension = "";
         String fileName = file.getName();
@@ -90,13 +103,19 @@ public class HTML {
         }
         return fileExtension;
     }
-
+    /**
+     * Thêm CSS và vào phần HTML đã có
+     * @param bodyHTML
+     * @return
+     * @throws IOException 
+     */
     private static String addCSS(String bodyHTML) throws IOException {
         String html = "";
         HTML tmp = new HTML();
         InputStream in = tmp.getClass().getResourceAsStream("form.html");
         BufferedReader fr = new BufferedReader(new InputStreamReader(in, "utf-8"));
         String line;
+        //Trong file form.html có 1 dòng bodyhere thay dòng này băng mã HTML
         while ((line = fr.readLine()) != null) {
             if (line.contains("bodyhere")) {
                 html += bodyHTML;
@@ -134,8 +153,6 @@ public class HTML {
         final File folder = new File(path);
         if (folder.isDirectory()) {
             bodyHTML += HTML.folderToHTML(folder);
-        } else {
-            bodyHTML += HTML.fileToHTML(folder);
         }
         bodyHTML += "</ul></div>";
         try {

@@ -74,6 +74,7 @@ public class TCPSocketServer {
                     os.write(fullHTML);
                     os.flush();
                 } else {
+                    //Gửi file
                     os.write("HTTP/1.1 200 OK\n");
                     os.write("Accept-Ranges: bytes\n");
                     os.write("Content-Length: " + myFile.length() + "\n");
