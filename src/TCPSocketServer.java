@@ -12,8 +12,18 @@ public class TCPSocketServer {
 
     public static void main(String[] args) throws IOException {
         ServerSocket listener = null;
+        int server_port = 8080;
+        if (args.length != 1) {
+            System.out.println("Usage: tcpserver [tcp port]");
+            System.exit(0);
+        }
+        try {
+            server_port = Integer.parseInt(args[0]);
+        } catch (NumberFormatException ex) {
+            System.out.println("Usage: tcpserver [tcp port]" + ex.toString());
+            System.exit(0);
+        }
         log("Server is waiting to accept user...");
-        final int server_port = 80;
         int clientNumber = 0;
 
         // Mở một ServerSocket tại cổng server_port.
@@ -88,7 +98,7 @@ public class TCPSocketServer {
                 socketOfServer.close();
             } catch (Exception e) {
                 log(e.toString());
-            } 
+            }
         }
     }
 
